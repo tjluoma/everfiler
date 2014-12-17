@@ -13,9 +13,9 @@ A zsh script to automate the filing of PDFs to Evernote via email, including Mac
 
 ## Installation
 
-- Install [tag](https://github.com/jdberry/tag) (I use [Homebrew](http://mxcl.github.com/homebrew/))
+- Install [tag](https://github.com/jdberry/tag) (`brew install tag`)
 
-- Install msmtp (http://msmtp.sourceforge.net)
+- Install [msmtp](http://msmtp.sourceforge.net) (`brew install mstmp`)
 	- Move `dot-mailrc.txt` file to ~/.mailrc
 	- chmod 600 ~/.mailrc
 	- Move `dot-msmtprc.txt` file to ~/.msmtprc
@@ -39,3 +39,4 @@ A zsh script to automate the filing of PDFs to Evernote via email, including Mac
 
 2.	The Hazel rule assumes that `everfiler.sh` will be installed to `/usr/local/bin/everfiler.sh`. If you put it somewhere else, you'll have to change the Hazel rule to get it to work.
 
+3.	I assume that you are using [Homebrew](http://mxcl.github.com/homebrew/) to install `tag` and `msmtp` but you can install them other ways as well.
