@@ -20,7 +20,7 @@ then
 		# zsh: 	if 'tag' isn't found anywhere in $PATH, then
 		# 		complain, tell user how to fix, and quit.
 	echo "$NAME: 'tag' is required but not found in $PATH."
-	echo "$NAME: Easiest fix: 'brew install tag'
+	echo "$NAME: Easiest fix: 'brew install tag'"
 	exit 1
 
 fi
