@@ -59,8 +59,16 @@ extension="$1:e"
 /usr/local/bin/mutt -s "$filename @$notebook $entags" $enemail -a "$1" < /dev/null
 
 #Send Notification to Pushover (optional)
-curl -s \
-  -F "token=YOUR TOKEN HERE" \
-  -F "user=YOUR USER ID STRING HERE" \
-  -F "message=$filename filed to @$notebook with tags: $entags" \
-  https://api.pushover.net/1/messages.json
+# PUSHOVER_TOKEN and PUSHOVER_USERNAME must be defined in ~/.zshenv
+
+if [ "$PUSHOVER_USERNAME" != "" -a "$PUSHOVER_TOKEN" != "" ]
+then
+	curl -s \
+		-F "token=$PUSHOVER_TOKEN" \
+		-F "user=$PUSHOVER_USERNAME" \
+		-F "message=$filename filed to @$notebook with tags: $entags" \
+		https://api.pushover.net/1/messages.json
+fi
+
+exit 0
+# EOF
