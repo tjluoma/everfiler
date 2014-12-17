@@ -1,0 +1,4 @@
+set sendmail="/usr/local/bin/msmtp"
+# THIS FILE MUST BE SAVED AS ~/.mailrc
+## Also:
+# chmod 600 ~/.mailrc
