@@ -6,14 +6,21 @@
 #Credit to James Berry for Tag utility (https://github.com/jdberry)
 
 
-#Set the name of the destination Evernote notebook
-notebook="NOTEBOOK NAME HERE"
-
-#Set the name of the destination Evernote notebook
-enemail="YOUR EVERNOTE EMAIL ADDRESS HERE"
-
 	# zsh: this gives you the name of the script without the path or extension
 NAME="$0:t:r"
+
+
+#Set the name of the destination Evernote notebook
+notebook="Everfiler"
+
+#Your Evernote mailto address
+
+if [ "$EVERNOTE_MAILTO" = "" ]
+then
+	enemail="YOUR EVERNOTE EMAIL ADDRESS HERE"
+else
+	enemail="$EVERNOTE_MAILTO"
+fi
 
 if ((! $+commands[tag] ))
 then
@@ -86,11 +93,11 @@ Content-Disposition: inline; filename=\"$1\"
 #Send Notification to Pushover (optional)
 # PUSHOVER_TOKEN and PUSHOVER_USERNAME must be defined in ~/.zshenv
 
-if [ "$PUSHOVER_USERNAME" != "" -a "$PUSHOVER_TOKEN" != "" ]
+if [ "$PUSHOVER_USERKEY" != "" -a "$PUSHOVER_TOKEN" != "" ]
 then
 	curl -s \
 		-F "token=$PUSHOVER_TOKEN" \
-		-F "user=$PUSHOVER_USERNAME" \
+		-F "user=$PUSHOVER_USERKEY" \
 		-F "message=$filename filed to @$notebook with tags: $entags" \
 		https://api.pushover.net/1/messages.json
 
