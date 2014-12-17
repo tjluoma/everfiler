@@ -84,7 +84,7 @@ Content-Type: application/pdf; name=\"$1\"
 Content-Transfer-Encoding: base64
 Content-Disposition: inline; filename=\"$1\"
 
-`base64 $1`" | msmtp --read-recipients
+`base64 ${1}`" | msmtp --read-recipients
 
 
 #Compose and send email using Mutt
@@ -99,7 +99,7 @@ then
 		-F "token=$PUSHOVER_TOKEN" \
 		-F "user=$PUSHOVER_USERKEY" \
 		-F "message=$filename filed to @$notebook with tags: $entags" \
-		https://api.pushover.net/1/messages.json
+		'https://api.pushover.net/1/messages.json'
 
 fi
 
