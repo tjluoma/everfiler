@@ -26,10 +26,10 @@ fi
 mavtags=$(tag --no-name * "$1")
 
 #Manipulate $mavtags var to create hashtags
-hashtags=$(echo $mavtags | tr ',' '\n' | sed -e 's/^/#/')
+hashtags=$(echo -n "${mavtags}" | tr ',' '\n' | sed -e 's/^/#/')
 
 #convert multiline $hashtags to single line var $entags
-entags=$(echo $hashtags | sed ':a;N;$!ba;s/\n/ /g')
+entags=$(echo -n "${hashtags}" | sed ':a;N;$!ba;s/\n/ /g')
 
 #creating the name of the note
 #remove the filepath
