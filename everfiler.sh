@@ -12,13 +12,30 @@ notebook="NOTEBOOK NAME HERE"
 #Set the name of the destination Evernote notebook
 enemail="YOUR EVERNOTE EMAIL ADDRESS HERE"
 
+	# zsh: this gives you the name of the script without the path or extension
+NAME="$0:t:r"
 
 if ((! $+commands[tag] ))
 then
-		# if 'tag' isn't found, complain, tell user how to fix, and quit
+		# zsh: 	if 'tag' isn't found anywhere in $PATH, then
+		# 		complain, tell user how to fix, and quit.
 	echo "$NAME: 'tag' is required but not found in $PATH."
 	echo "$NAME: Easiest fix: 'brew install tag'
 	exit 1
+
+fi
+
+if [[ ! -f "$1" ]]
+then
+		# Does the arg exist as a file?
+		if [[ ! -e "$1" ]]
+		then
+			echo "$NAME: $1 does not exist"
+			exit 1
+		else
+			echo "$NAME: $1 is not a regular file."
+			exit 1
+		fi
 
 fi
 
