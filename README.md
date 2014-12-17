@@ -31,7 +31,4 @@ A bash script to automate the filing of documents to Evernote via email includin
 - Create a "SendToEvernote" folder (you can call it whatever you want)
 	- Add "SendToEvernote" folder to Hazel
 	- import `SendToEvernote.hazelrules` to Hazel for that folder
-
-## Help Wanted
-
-- I'm having trouble running this as a Shell script from Hazel. When I run it as an Automator script via Hazel, it works. More details to come
+	- After the file is processed by Hazel, it will be moved to your ~/Desktop/. If you'd like it to be moved somewhere else, change the last line of the Hazel rule.
