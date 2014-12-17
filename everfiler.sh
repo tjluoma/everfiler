@@ -9,14 +9,13 @@
 	# zsh: this gives you the name of the script without the path or extension
 NAME="$0:t:r"
 
-
-#Set the name of the destination Evernote notebook
+#Set the name of the destination Evernote notebook (must already exist!)
 notebook="Everfiler"
 
-#Your Evernote mailto address
 
-if [ "$EVERNOTE_MAILTO" = "" ]
+if [[ "$EVERNOTE_MAILTO" == "" ]]
 then
+		#Your Evernote mailto address
 	enemail="YOUR EVERNOTE EMAIL ADDRESS HERE"
 else
 	enemail="$EVERNOTE_MAILTO"
@@ -54,13 +53,13 @@ then
 fi
 
 #Grab the file tags (using 'Tags') and store them in variable 'mavtags'
-mavtags=$(tag --no-name * "$1")
+mavtags=$(tag --no-name "$1")
 
 #Manipulate $mavtags var to create hashtags
 hashtags=$(echo -n "${mavtags}" | tr ',' '\n' | sed -e 's/^/#/')
 
 #convert multiline $hashtags to single line var $entags
-entags=$(echo -n "${hashtags}" | sed ':a;N;$!ba;s/\n/ /g')
+entags=$(echo -n "${hashtags}" | tr '\n' ' ')
 
 #creating the name of the note
 #remove the filepath
@@ -86,22 +85,43 @@ Content-Disposition: inline; filename=\"$1\"
 
 `base64 ${1}`" | msmtp --read-recipients
 
+EXIT="$?"
 
-#Compose and send email using Mutt
-# /usr/local/bin/mutt -s "$filename @$notebook $entags" $enemail -a "$1" < /dev/null
-
-#Send Notification to Pushover (optional)
-# PUSHOVER_TOKEN and PUSHOVER_USERNAME must be defined in ~/.zshenv
-
-if [ "$PUSHOVER_USERKEY" != "" -a "$PUSHOVER_TOKEN" != "" ]
+if [ "$EXIT" = "0" ]
 then
-	curl -s \
-		-F "token=$PUSHOVER_TOKEN" \
-		-F "user=$PUSHOVER_USERKEY" \
-		-F "message=$filename filed to @$notebook with tags: $entags" \
-		'https://api.pushover.net/1/messages.json'
+	MSG="$NAME: $filename filed to @$notebook with tags: $entags"
 
+	echo "$MSG"
+
+		#Send Notification to Pushover (optional)
+		# PUSHOVER_TOKEN and PUSHOVER_USERNAME must be defined in ~/.zshenv
+
+	if [ "$PUSHOVER_USERKEY" != "" -a "$PUSHOVER_TOKEN" != "" ]
+	then
+		curl -s \
+			-F "token=$PUSHOVER_TOKEN" \
+			-F "user=$PUSHOVER_USERKEY" \
+			-F "message=$MSG" \
+			'https://api.pushover.net/1/messages.json' 2>&1 >/dev/null
+	fi
+else
+	msg "$NAME: Failed to send $filename (msmtp \$EXIT = $EXIT)"
+
+	echo "$MSG"
+
+	if [ "$PUSHOVER_USERKEY" != "" -a "$PUSHOVER_TOKEN" != "" ]
+	then
+		curl -s \
+			-F "token=$PUSHOVER_TOKEN" \
+			-F "user=$PUSHOVER_USERKEY" \
+			-F "message=$MSG" \
+			'https://api.pushover.net/1/messages.json' 2>&1 >/dev/null
+	fi
+
+	exit 1
 fi
+
+
 
 exit 0
 # EOF
