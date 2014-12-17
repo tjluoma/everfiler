@@ -35,7 +35,7 @@ A zsh script to automate the filing of PDFs to Evernote via email, including Mac
 
 ## There are a few provisos, a couple of *quid pro quos*.
 
-The script (and the Hazel rule) will only work on PDFs (which is to say, files which end with ".pdf").
+1.	The script (and the Hazel rule) will only work on PDFs (which is to say, files which end with ".pdf"). Additional filetypes could be added by editing `everfiler.sh` to send the proper MIME type, etc., but this seems like a lot of effort since making any file into a PDF on OS X is so easy. Plus, most of the files I want to send to Evernote are already PDFs.
 
-Additional filetypes could be added by editing `everfiler.sh` to send the proper MIME type, etc., but this seems like a lot of effort since making any file into a PDF on OS X is so easy. Plus, most of the files I want to send to Evernote are already PDFs.
+2.	The Hazel rule assumes that `everfiler.sh` will be installed to `/usr/local/bin/everfiler.sh`. If you put it somewhere else, you'll have to change the Hazel rule to get it to work.
 
