@@ -50,9 +50,10 @@ entags=$(echo -n "${hashtags}" | sed ':a;N;$!ba;s/\n/ /g')
 
 #creating the name of the note
 #remove the filepath
-filename=$(basename "$1")
-extension="${filename##*.}"
-filename="${filename%.*}"
+# in Zsh, foo:t = 'tail' i.e. filename without the path
+filename="$1:t"
+# in Zsh, foo:e = 'extension'
+extension="$1:e"
 
 #Compose and send email using Mutt
 /usr/local/bin/mutt -s "$filename @$notebook $entags" $enemail -a "$1" < /dev/null
