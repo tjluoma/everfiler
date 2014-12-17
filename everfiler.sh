@@ -12,8 +12,18 @@ notebook="NOTEBOOK NAME HERE"
 #Set the name of the destination Evernote notebook
 enemail="YOUR EVERNOTE EMAIL ADDRESS HERE"
 
+
+if ((! $+commands[tag] ))
+then
+		# if 'tag' isn't found, complain, tell user how to fix, and quit
+	echo "$NAME: 'tag' is required but not found in $PATH."
+	echo "$NAME: Easiest fix: 'brew install tag'
+	exit 1
+
+fi
+
 #Grab the file tags (using 'Tags') and store them in variable 'mavtags'
-mavtags=$(/usr/local/bin/tag --no-name * "$1")
+mavtags=$(tag --no-name * "$1")
 
 #Manipulate $mavtags var to create hashtags
 hashtags=$(echo $mavtags | tr ',' '\n' | sed -e 's/^/#/')
