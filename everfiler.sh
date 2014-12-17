@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 #Everfiler: Hazel to Evernote w/ OS X tags
 #Hacked together by Ryan Anderson (http://ryananderson.com.au)
 #Ensure Mutt & Tag (https://github.com/jdberry/tag) are installed (I used Homebrew)
