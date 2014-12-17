@@ -22,8 +22,15 @@ then
 	echo "$NAME: 'tag' is required but not found in $PATH."
 	echo "$NAME: Easiest fix: 'brew install tag'"
 	exit 1
-
 fi
+
+if ((! $+commands[msmtp] ))
+then
+	echo "$NAME: msmtp is required but not found in $PATH"
+	echo "$NAME: Easiest fix: 'brew install mstmp' (however it also requires customization after install)"
+	exit 1
+fi
+
 
 if [[ ! -f "$1" ]]
 then
@@ -55,8 +62,26 @@ filename="$1:t"
 # in Zsh, $foo:e = 'the extension of $foo'
 extension="$1:e"
 
+if [ "$extension:l" != "pdf" ]
+then
+	echo "$NAME only works with PDFs. Sorry"
+	exit 1
+fi
+
+
+echo "To: $enemail
+Mime-Version: 1.0
+Subject: $1 @${notebook} ${entags}
+X-Mailer: everfiler.sh
+Content-Type: application/pdf; name=\"$1\"
+Content-Transfer-Encoding: base64
+Content-Disposition: inline; filename=\"$1\"
+
+`base64 $1`" | msmtp --read-recipients
+
+
 #Compose and send email using Mutt
-/usr/local/bin/mutt -s "$filename @$notebook $entags" $enemail -a "$1" < /dev/null
+# /usr/local/bin/mutt -s "$filename @$notebook $entags" $enemail -a "$1" < /dev/null
 
 #Send Notification to Pushover (optional)
 # PUSHOVER_TOKEN and PUSHOVER_USERNAME must be defined in ~/.zshenv
@@ -68,6 +93,7 @@ then
 		-F "user=$PUSHOVER_USERNAME" \
 		-F "message=$filename filed to @$notebook with tags: $entags" \
 		https://api.pushover.net/1/messages.json
+
 fi
 
 exit 0
