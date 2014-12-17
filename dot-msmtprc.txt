@@ -1,0 +1,25 @@
+## THIS FILE MUST BE SAVED TO ~/.msmtprc
+## Also:
+# chmod 600 ~/.msmtprc
+
+## I highly recommend that you use Two-Factor Authentication with your Gmail account
+## and create a specific app password for MSMTP
+## at https://security.google.com/settings/security/apppasswords
+
+	# Gmail Address
+account 		gmail
+host 			smtp.gmail.com
+from 			yourname@gmail.com
+user 			yourname@gmail.com
+password 		XXXXXXXXXXXXXXXXXXX
+port 			587
+protocol 		smtp
+auth 			on
+tls 			on
+tls_starttls 	on
+tls_trust_file 	/usr/local/etc/openssl/cert.pem
+logfile 		~/Library/Logs/metalog/msmtp.log
+
+account default : gmail
+
+# end msmtprc
