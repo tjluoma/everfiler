@@ -77,7 +77,7 @@ fi
 
 echo "To: $enemail
 Mime-Version: 1.0
-Subject: $1 @${notebook} ${entags}
+Subject: $filename @${notebook} ${entags}
 X-Mailer: everfiler.sh
 Content-Type: application/pdf; name=\"$1\"
 Content-Transfer-Encoding: base64
